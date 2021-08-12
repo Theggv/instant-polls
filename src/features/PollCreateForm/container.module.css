@@ -1,0 +1,37 @@
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 10px;
+
+  border: 2px solid salmon;
+  border-radius: 8px;
+
+  display: grid;
+  grid-template:
+    'title' auto
+    'options' 1fr
+    'settings' auto
+    'submit' auto;
+}
+
+.title {
+  grid-area: title;
+}
+
+.options {
+  margin-top: 20px;
+  grid-area: options;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings {
+  grid-area: settings;
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+}
+
+.submit {
+  grid-area: submit;
+}

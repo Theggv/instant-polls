@@ -1,0 +1,10 @@
+option {
+  max-width: 100%;
+  margin: 10px;
+  padding: 5px 10px;
+
+  border: 2px solid salmon;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+}
