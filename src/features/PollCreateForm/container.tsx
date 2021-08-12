@@ -90,6 +90,7 @@ export const PollCreateForm: React.FC<Draft> = ({
         <ButtonInput value='Create poll' />
         <ButtonInput value='Save as draft' />
       </div>
+      <div className={classes.margins}></div>
     </form>
   );
 };

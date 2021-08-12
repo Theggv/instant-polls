@@ -1,10 +1,7 @@
 .container {
   max-width: 600px;
   width: 100%;
-  padding: 10px;
-
-  border: 2px solid salmon;
-  border-radius: 8px;
+  background-color: #ffd756;
 
   display: grid;
   grid-template:
@@ -12,17 +9,33 @@
     'options' 1fr
     'settings' auto
     'submit' auto;
+  gap: 5px;
+  position: relative;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 25px;
+  width: 8px;
+  border-left: 2px solid #ca302c;
+  border-right: 2px solid #ca302c;
 }
 
 .title {
   grid-area: title;
+  padding-top: 25px;
+  padding-bottom: 25px;
+
 }
 
 .options {
-  margin-top: 20px;
   grid-area: options;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .settings {
@@ -34,4 +47,9 @@
 
 .submit {
   grid-area: submit;
+  margin-left: 40px;
+}
+
+.create_poll_button {
+  font-weight: bold;
 }
