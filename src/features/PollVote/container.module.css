@@ -1,0 +1,22 @@
+.title {
+}
+
+.options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  max-width: 350px;
+}
+
+.submit {
+}
+
+.button {
+  width: 150px;
+}

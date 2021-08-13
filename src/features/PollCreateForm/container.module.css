@@ -28,6 +28,7 @@
 .settings {
   grid-area: settings;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   max-width: 350px;
 }

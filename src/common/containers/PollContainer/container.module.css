@@ -1,0 +1,29 @@
+.container {
+  position: relative;
+
+  max-width: 600px;
+  width: 100%;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #ffd756;
+}
+
+.wrapper {
+  z-index: 1;
+}
+
+.container::before {
+  content: '';
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 25px;
+  width: 10px;
+
+  border-left: 2px solid #ca302c;
+  border-right: 2px solid #ca302c;
+}
