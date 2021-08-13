@@ -1,22 +1,47 @@
 .title {
+  display: block;
+  padding: 20px 0 0 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .options {
-  margin-top: 20px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
 }
 
-.settings {
+.options .options__item:first-child {
+  border-top: 2px solid #b1b874;
+}
+
+.options__item {
+  margin-left: 0;
+  padding-left: 40px;
+  border: none;
+  border-bottom: 2px solid #b1b874;
+}
+
+.captcha {
+  margin: 20px 0px;
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  max-width: 350px;
+  justify-content: center;
 }
 
-.submit {
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
 }
 
-.button {
-  width: 150px;
+.btn__vote {
+  background-color: #ca302c;
+}
+
+.btn__vote:hover {
+  background-color: #ca302c;
+}
+
+.btn__vote:active {
+  background-color: #a02824;
 }

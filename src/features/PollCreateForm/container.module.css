@@ -1,45 +1,21 @@
-.container {
-  max-width: 600px;
-  width: 100%;
-  background-color: #ffd756;
-
-  display: grid;
-  grid-template:
-    'title' auto
-    'options' 1fr
-    'settings' auto
-    'submit' auto;
-  gap: 5px;
-  position: relative;
-}
-
-.container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 25px;
-  width: 8px;
-  border-left: 2px solid #ca302c;
-  border-right: 2px solid #ca302c;
-}
-
 .title {
-  grid-area: title;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: 100%;
+  font-size: 1.2rem;
+}
 
+.title::placeholder {
+  font-size: 1.2rem;
 }
 
 .options {
-  grid-area: options;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .settings {
-  grid-area: settings;
+  margin-top: 10px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -47,10 +23,18 @@
 }
 
 .submit {
-  grid-area: submit;
+  margin: 20px;
   margin-left: 40px;
 }
 
-.create_poll_button {
-  font-weight: bold;
+.btn__submit {
+  background-color: #ca302c;
+}
+
+.btn__submit:hover {
+  background-color: #ca302c;
+}
+
+.btn__submit:active {
+  background-color: #a02824;
 }

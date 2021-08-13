@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ReCAPTCHA } from 'react-google-recaptcha';
+import { Link, useParams } from 'react-router-dom';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
 import { PollContainer } from '../../common/containers/PollContainer';
 import { useBooleanInput } from '../../common/hooks/useBooleanInput';
-import { useTextInput } from '../../common/hooks/useTextInput';
-import { ButtonInput } from '../../common/UI/input/ButtonInput';
-import { TextInput } from '../../common/UI/input/TextInput';
-import { StyledLabel } from '../../common/UI/label/StyledLabel';
-import { StyledOption } from '../../common/UI/select/StyledOption';
-import { StyledSelect } from '../../common/UI/select/StyledSelect';
-import classes from './container.module.css';
-
-import { ReCAPTCHA } from 'react-google-recaptcha';
 import { useCaptcha } from '../../common/hooks/useCaptcha';
+import { ButtonInput } from '../../common/UI/input/ButtonInput';
+import { StyledLabel } from '../../common/UI/label/StyledLabel';
+import classes from './container.module.css';
 
 type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
 
@@ -25,8 +21,8 @@ interface Draft {
 }
 
 export const PollVote: React.FC<Draft> = ({
-  title = '?',
-  options = ['1', '2', '3', '4', '5'],
+  title = 'Question?',
+  options = ['Answer #1', 'Answer #2', 'Answer #3'],
   multiple = false,
   captcha: enableCaptcha = true,
 }) => {
@@ -35,6 +31,7 @@ export const PollVote: React.FC<Draft> = ({
     Array(options.length).fill(false)
   );
   const captcha = useCaptcha(enableCaptcha);
+  const { id } = useParams<{ id?: string }>();
 
   const onChange = (isChecked: boolean, index: number) => {
     if (multiple) {
@@ -46,14 +43,15 @@ export const PollVote: React.FC<Draft> = ({
     }
   };
 
-  // Debug token
-  useEffect(() => {
-    console.log('token', captcha.token);
-  }, [captcha.token]);
+  const onClickVote = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+
+    if (!selected.filter((x) => x).length) return;
+  };
 
   return (
-    <PollContainer>
-      <StyledLabel>{title}</StyledLabel>
+    <PollContainer type='form'>
+      <StyledLabel className={classes.title}>{title}</StyledLabel>
 
       <div className={classes.options}>
         {options.map((option, index) => (
@@ -62,19 +60,30 @@ export const PollVote: React.FC<Draft> = ({
             checked={selected[index]}
             text={option}
             onChange={(e) => onChange(e.target.checked, index)}
+            className={classes.options__item}
           />
         ))}
       </div>
+
       {enableCaptcha && (
-        <ReCAPTCHA
-          sitekey='6LfrqfobAAAAAIgqP9z4s2oKRdEHwx4xDQgRjj54'
-          {...captcha.bind}
-        />
+        <div className={classes.captcha}>
+          <ReCAPTCHA
+            sitekey='6LfrqfobAAAAAIgqP9z4s2oKRdEHwx4xDQgRjj54'
+            {...captcha.bind}
+          />
+        </div>
       )}
 
-      <div className={classes.submit}>
-        <ButtonInput className={classes.button} value='Vote' />
-        <ButtonInput className={classes.button} value='Results' />
+      <div className={classes.buttons}>
+        <ButtonInput
+          type='submit'
+          className={classes.btn__vote}
+          value='Vote'
+          onClick={onClickVote}
+        />
+        <Link to={`/${id}/r`}>
+          <ButtonInput value='Results' />
+        </Link>
       </div>
     </PollContainer>
   );

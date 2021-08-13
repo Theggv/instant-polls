@@ -1,0 +1,7 @@
+.bar {
+  max-height: 100%;
+  max-width: 100%;
+  background-color: #ca302c;
+
+  transition: all 0.5s ease-out;
+}

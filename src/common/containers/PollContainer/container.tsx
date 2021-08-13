@@ -16,6 +16,6 @@ export const PollContainer: React.FC<Props> = ({
   return React.createElement(
     type,
     { className: clsx(classes.container, className) },
-    <div className={classes.wrapper}>{children}</div>
+    children
   );
 };

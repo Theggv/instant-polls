@@ -1,14 +1,17 @@
 .input {
+  font-size: 1rem;
+  font-family: 'Patrick Hand', 'Comic Sans MS', 'Comic Sans MS5', sans-serif;
+  cursor: text;
+
   max-width: 100%;
   margin: 0;
-  padding: 5px 5px 5px 50px;
+  padding: 8px 5px 8px 50px;
+
   border: none;
-  border-bottom: 2px solid darkblue;
+  border-bottom: 2px solid #b1b874;
   border-radius: 0;
+
   background-color: transparent;
-  font-family: "Patrick Hand", "Comic Sans MS", "Comic Sans MS5", sans-serif;
-  font-size: 1rem;
-  cursor: text;
 }
 
 .input::placeholder {
