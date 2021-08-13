@@ -12,8 +12,12 @@ code {
     monospace;
 }
 
+<<<<<<< HEAD
+*, *::before, *::after {
+=======
 *,
 *::before,
 *::after {
+>>>>>>> 589a0d9e42b71f861b5c6602ff33e9374902b895
   box-sizing: border-box;
 }

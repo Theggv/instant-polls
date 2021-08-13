@@ -1,4 +1,4 @@
-input {
+.input {
   max-width: 100%;
   margin: 10px;
   padding: 5px;
@@ -8,6 +8,7 @@ input {
   font-size: 1rem;
 }
 
-input::placeholder {
+.input::placeholder {
   font-size: 1rem;
 }
+

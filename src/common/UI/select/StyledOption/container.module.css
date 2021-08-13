@@ -6,5 +6,9 @@ option {
   border: 2px solid salmon;
   border-radius: 4px;
   font-size: 1rem;
-  background-color: white;
+  background-color: transparent;
+}
+
+option:hover {
+  background-color: mediumturquoise;
 }
