@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 
 import { MainPage } from '../pages/MainPage';
 import { ResultsPage } from '../pages/ResultsPage';
@@ -7,11 +7,11 @@ import { VotePage } from '../pages/VotePage';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Route path='/:id/r' component={ResultsPage} />
-      <Route exact path='/:id' component={VotePage} />
+    <HashRouter basename='/'>
       <Route exact path='/' component={MainPage} />
-    </BrowserRouter>
+      <Route exact path='/:id' component={VotePage} />
+      <Route exact path='/:id/r' component={ResultsPage} />
+    </HashRouter>
   );
 }
 
