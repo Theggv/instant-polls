@@ -14,21 +14,22 @@ export const Container: React.FC<Props> = ({ text, checked, onChange }) => {
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={classes.container}>
+    <div
+      className={classes.container}
+      onClick={() => {
+        ref.current && ref.current.click();
+      }}
+    >
       <CheckboxInput
         ref={ref}
         checked={checked}
         onChange={onChange}
         className={classes.checkbox}
-      />
-      <StyledLabel
-        className={classes.label}
-        onClick={() => {
-          ref.current && ref.current.click();
+        onClick={(e) => {
+          e.stopPropagation();
         }}
-      >
-        {text}
-      </StyledLabel>
+      />
+      <StyledLabel className={classes.label}>{text}</StyledLabel>
     </div>
   );
 };

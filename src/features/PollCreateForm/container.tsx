@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
+import { PollContainer } from '../../common/containers/PollContainer';
 import { useBooleanInput } from '../../common/hooks/useBooleanInput';
 import { useTextInput } from '../../common/hooks/useTextInput';
 import { ButtonInput } from '../../common/UI/input/ButtonInput';
@@ -42,6 +43,7 @@ export const PollCreateForm: React.FC<Draft> = ({
     if (options.length < 3 || options[options.length - 1] !== '')
       setOptions([...options, '']);
 
+    // Remove unused options [. text . .] -> [. text .]
     if (
       options.length > 3 &&
       options[options.length - 1] === '' &&
@@ -51,7 +53,7 @@ export const PollCreateForm: React.FC<Draft> = ({
   }, [options]);
 
   return (
-    <form className={classes.container}>
+    <PollContainer type='form'>
       <TextInput
         className={classes.title}
         placeholder='Type your question'
@@ -90,7 +92,11 @@ export const PollCreateForm: React.FC<Draft> = ({
         <ButtonInput value='Create poll' />
         <ButtonInput value='Save as draft' />
       </div>
+<<<<<<< HEAD
       <div className={classes.margins}></div>
     </form>
+=======
+    </PollContainer>
+>>>>>>> 589a0d9e42b71f861b5c6602ff33e9374902b895
   );
 };
