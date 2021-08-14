@@ -7,10 +7,10 @@ import { PollContainer } from '../../common/containers/PollContainer';
 import { useBooleanInput } from '../../common/hooks/useBooleanInput';
 import { useTextInput } from '../../common/hooks/useTextInput';
 import { PollDraft } from '../../common/model/pollDraft';
-import { ButtonInput } from '../../common/ui2/input/ButtonInput';
-import { TextInput } from '../../common/ui2/input/TextInput';
-import { StyledOption } from '../../common/ui2/select/StyledOption';
-import { StyledSelect } from '../../common/ui2/select/StyledSelect';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { TextInput } from '../../common/ui/input/TextInput';
+import { StyledOption } from '../../common/ui/select/StyledOption';
+import { StyledSelect } from '../../common/ui/select/StyledSelect';
 import { createPoll } from './api';
 import classes from './PollCreateForm.module.css';
 

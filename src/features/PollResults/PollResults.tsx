@@ -4,8 +4,8 @@ import React from 'react';
 import { ChartBar } from '../../common/components/ChartBar';
 import { PollContainer } from '../../common/containers/PollContainer';
 import { PollDraft } from '../../common/model/pollDraft';
-import { ButtonInput } from '../../common/ui2/input/ButtonInput';
-import { StyledLabel } from '../../common/ui2/label/StyledLabel';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { StyledLabel } from '../../common/ui/label/StyledLabel';
 import classes from './PollResults.module.css';
 
 export interface PollResultsProps {

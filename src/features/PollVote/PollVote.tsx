@@ -7,8 +7,8 @@ import { CheckboxOption } from '../../common/components/CheckboxOption';
 import { PollContainer } from '../../common/containers/PollContainer';
 import { useCaptcha } from '../../common/hooks/useCaptcha';
 import { PollDraft } from '../../common/model/pollDraft';
-import { ButtonInput } from '../../common/ui2/input/ButtonInput';
-import { StyledLabel } from '../../common/ui2/label/StyledLabel';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { StyledLabel } from '../../common/ui/label/StyledLabel';
 import { submitAnswer } from './api/submit';
 import classes from './PollVote.module.css';
 
