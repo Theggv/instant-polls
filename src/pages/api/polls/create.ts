@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '../../../common/model/firebase';
-import { PollDraft } from '../../../common/model/pollDraft';
+import {
+  PollDraft,
+  DuplicateCheckTypes,
+} from '../../../common/model/pollDraft';
 
 export type CreatePollResponse = {
   id: string;
