@@ -1,0 +1,1 @@
+export { StyledLabel } from './StyledLabel';

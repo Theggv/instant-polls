@@ -1,0 +1,1 @@
+export { StyledOption } from './StyledOption';

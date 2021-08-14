@@ -1,1 +1,1 @@
-export { Container as ChartBar } from './container';
+export { ChartBar } from './ChartBar';

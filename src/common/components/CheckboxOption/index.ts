@@ -1,1 +1,1 @@
-export { Container as CheckboxOption } from './container';
+export { CheckboxOption } from './CheckboxOption';

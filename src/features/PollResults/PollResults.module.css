@@ -1,0 +1,87 @@
+.title {
+  display: block;
+  padding: 20px 0 0 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.results {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.results__item {
+  display: grid;
+  grid-template:
+    'name votes' 1fr
+    'bar percent' 1fr
+    / 5fr 1fr;
+}
+
+.results__item__name {
+  grid-area: name;
+
+  padding-left: 50px;
+  font-weight: bold;
+}
+
+.results__item__votes {
+  grid-area: votes;
+}
+
+.results__item__bar {
+  grid-area: bar;
+
+  margin: 5px;
+  margin-left: 40px;
+}
+
+.results__item__percent {
+  grid-area: percent;
+  font-weight: bold;
+}
+
+.results__item .results__item__name,
+.results__item .results__item__votes {
+  border-top: 2px solid #b1b874;
+  border-bottom: 2px solid #b1b874;
+}
+
+.results__item .results__item__name,
+.results__item .results__item__votes,
+.results__item .results__item__percent {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.results__item .results__item__votes,
+.results__item .results__item__percent {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  margin: 20px;
+}
+
+.footer__total__votes {
+  margin-left: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.btn__vote {
+  background-color: #ca302c;
+}
+
+.btn__vote:hover {
+  background-color: #ca302c;
+}
+
+.btn__vote:active {
+  background-color: #a02824;
+}
