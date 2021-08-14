@@ -31,10 +31,6 @@ const usePollForm = (draft: PollDraft) => {
 
     if (!titleInput.value || !nonEmptyOptions.length) return;
 
-    /**
-     * Create poll logic
-     */
-
     // redirect TODO: replace 1 with actual id
     // history.push('/1');
   };
