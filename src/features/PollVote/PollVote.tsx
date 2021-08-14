@@ -25,6 +25,8 @@ export const PollVote: React.FC<PollVoteProps> = ({ id, draft }) => {
   );
   const captcha = useCaptcha(draft.useCaptcha);
 
+  const [voteClicked, setVoteClicked] = useState(false);
+
   const onChange = (isChecked: boolean, index: number) => {
     if (draft.multiple) {
       setSelected(
@@ -40,7 +42,9 @@ export const PollVote: React.FC<PollVoteProps> = ({ id, draft }) => {
   ) => {
     e.preventDefault();
 
-    if (!selected.filter((x) => x).length) return;
+    if (!selected.filter((x) => x).length || voteClicked) return;
+
+    setVoteClicked(true);
 
     const data = await submitAnswer(id, selected);
     if (!data) return;

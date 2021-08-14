@@ -21,6 +21,8 @@ const usePollForm = (draft: PollDraft) => {
   const captchaInput = useBooleanInput(draft.useCaptcha);
   const duplicatesInput = useTextInput(draft.checkDuplicates);
 
+  const [clicked, setClicked] = useState(false);
+
   const nonEmptyOptions = useMemo(() => options.filter((x) => x), [options]);
 
   const getDraft = (): PollDraft => ({
@@ -41,7 +43,9 @@ const usePollForm = (draft: PollDraft) => {
   ) => {
     e.preventDefault();
 
-    if (!titleInput.value || !nonEmptyOptions.length) return;
+    if (!titleInput.value || !nonEmptyOptions.length || clicked) return;
+
+    setClicked(true);
 
     const key = await createPoll(getDraft());
     Router.push(`/polls/${key}`);
