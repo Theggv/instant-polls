@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import React, { useRef } from 'react';
 
-import { CheckboxInput } from '../../ui/input/CheckboxInput';
-import { StyledLabel } from '../../ui/label/StyledLabel';
+import { CheckboxInput } from '../../ui2/input/CheckboxInput';
+import { StyledLabel } from '../../ui2/label/StyledLabel';
 import classes from './CheckboxOption.module.css';
 
 interface Props {
