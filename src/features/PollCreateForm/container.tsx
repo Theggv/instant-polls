@@ -1,60 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import Link from 'next/link';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
 import { PollContainer } from '../../common/containers/PollContainer';
 import { useBooleanInput } from '../../common/hooks/useBooleanInput';
-import { useQuery } from '../../common/hooks/useQuery';
 import { useTextInput } from '../../common/hooks/useTextInput';
-import { ButtonInput } from '../../common/UI/input/ButtonInput';
-import { TextInput } from '../../common/UI/input/TextInput';
-import { StyledOption } from '../../common/UI/select/StyledOption';
-import { StyledSelect } from '../../common/UI/select/StyledSelect';
+import { PollDraft } from '../../common/model/pollDraft';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { TextInput } from '../../common/ui/input/TextInput';
+import { StyledOption } from '../../common/ui/select/StyledOption';
+import { StyledSelect } from '../../common/ui/select/StyledSelect';
 import classes from './container.module.css';
 
-type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
-type Draft = {
-  title: string;
-  options: string[];
-  multiple: boolean;
-  captcha: boolean;
-  checkDuplicates: DuplicateCheckTypes;
-};
-
-export const defaultDraft = {
-  title: '',
-  options: [],
-  multiple: false,
-  captcha: false,
-  checkDuplicates: 'cookies',
-} as Draft;
-
-export const PollCreateForm: React.FC = () => {
-  const history = useHistory();
-
-  const query = useQuery();
-  const draft = query.get('draft')
-    ? (JSON.parse(query.get('draft')!) as Draft)
-    : defaultDraft;
-
+const usePollForm = (draft: PollDraft) => {
   const titleInput = useTextInput(draft.title);
   const [options, setOptions] = useState<string[]>([...draft.options]);
   const allowMultipleInput = useBooleanInput(draft.multiple);
-  const captchaInput = useBooleanInput(draft.captcha);
+  const captchaInput = useBooleanInput(draft.useCaptcha);
   const duplicatesInput = useTextInput(draft.checkDuplicates);
 
+  const nonEmptyOptions = useMemo(() => options.filter((x) => x), [options]);
+
   // Change value for specific option
-  const onChange = (value: string, index: number) => {
+  const onOptionChange = (value: string, index: number) => {
     setOptions(options.map((oldValue, i) => (i === index ? value : oldValue)));
   };
 
-  const getDraft = (): Draft => ({
-    title: titleInput.value,
-    options: options.filter((x) => x !== ''),
-    multiple: allowMultipleInput.value,
-    captcha: captchaInput.value,
-    checkDuplicates: duplicatesInput.value as any,
-  });
+  const onCreatePoll = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+
+    if (!titleInput.value || !nonEmptyOptions.length) return;
+
+    /**
+     * Create poll logic
+     */
+
+    // redirect TODO: replace 1 with actual id
+    // history.push('/1');
+  };
 
   useEffect(() => {
     // Add new option on change last option
@@ -70,20 +53,57 @@ export const PollCreateForm: React.FC = () => {
       setOptions(options.filter((_, i) => i !== options.length - 1));
   }, [options]);
 
-  const onCreatePoll = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    e.preventDefault();
+  return {
+    title: titleInput.bind,
+    multiple: allowMultipleInput.bind,
+    useCaptcha: captchaInput.bind,
+    checkDuplicates: {
+      value: duplicatesInput.value,
+      onChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        duplicatesInput.setValue(e.target.value);
+      },
+    },
 
-    const draft = getDraft();
+    options,
+    setOptions,
 
-    if (!draft.title || !draft.options.length) return;
+    onOptionChange,
+    onCreatePoll,
 
-    /**
-     * Create poll logic
-     */
+    draft: {
+      title: titleInput.value,
+      options: nonEmptyOptions,
+      checkDuplicates: duplicatesInput.value,
+      multiple: allowMultipleInput.value,
+      useCaptcha: captchaInput.value,
+    } as PollDraft,
 
-    // redirect TODO: replace 1 with actual id
-    history.push('/1');
+    asSearchParam() {
+      return JSON.stringify({
+        ...this.draft,
+        title: encodeURIComponent(titleInput.value),
+        options: nonEmptyOptions.map(encodeURIComponent),
+      });
+    },
   };
+};
+
+export const defaultDraft = {
+  title: '',
+  options: [],
+  multiple: false,
+  useCaptcha: false,
+  checkDuplicates: 'cookies',
+} as PollDraft;
+
+interface PollCreateFormProps {
+  draft?: PollDraft;
+}
+
+export const PollCreateForm: React.FC<PollCreateFormProps> = ({
+  draft = defaultDraft,
+}) => {
+  const form = usePollForm(draft);
 
   return (
     <PollContainer type='form'>
@@ -91,14 +111,14 @@ export const PollCreateForm: React.FC = () => {
         required
         className={classes.title}
         placeholder='Type your question'
-        {...titleInput.bind}
+        {...form.title}
       />
 
       <div className={classes.options}>
-        {options.map((option, index) => (
+        {form.options.map((option, index) => (
           <TextInput
             key={index}
-            onChange={(e) => onChange(e.target.value, index)}
+            onChange={(e) => form.onOptionChange(e.target.value, index)}
             value={option}
             placeholder='Type option'
           />
@@ -106,23 +126,15 @@ export const PollCreateForm: React.FC = () => {
       </div>
 
       <div className={classes.settings}>
-        <StyledSelect
-          value={duplicatesInput.value}
-          onChange={(e) => {
-            duplicatesInput.setValue(e.target.value);
-          }}
-        >
+        <StyledSelect {...form.checkDuplicates}>
           <StyledOption value='ip'>IP Duplication Checking</StyledOption>
           <StyledOption value='cookies'>
             Browser Cookie Duplication Checking
           </StyledOption>
           <StyledOption value='none'>No Duplication Checking</StyledOption>
         </StyledSelect>
-        <CheckboxOption {...captchaInput.bind} text='Use captcha?' />
-        <CheckboxOption
-          {...allowMultipleInput.bind}
-          text='Allow multiple choices?'
-        />
+        <CheckboxOption {...form.useCaptcha} text='Use captcha?' />
+        <CheckboxOption {...form.multiple} text='Allow multiple choices?' />
       </div>
 
       <div className={classes.submit}>
@@ -130,18 +142,12 @@ export const PollCreateForm: React.FC = () => {
           type='submit'
           className={classes.btn__submit}
           value='Create poll'
-          onClick={onCreatePoll}
+          onClick={form.onCreatePoll}
         />
         <Link
-          to={{
+          href={{
             pathname: '',
-            search: `draft=${JSON.stringify({
-              title: encodeURIComponent(titleInput.value),
-              options: options.filter((x) => x !== '').map(encodeURIComponent),
-              multiple: allowMultipleInput.value,
-              captcha: captchaInput.value,
-              checkDuplicates: duplicatesInput.value,
-            })}`,
+            search: `draft=${form.asSearchParam()}`,
           }}
         >
           <ButtonInput value='Save as draft' />

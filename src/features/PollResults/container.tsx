@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import Link from 'next/link';
 
 import { ChartBar } from '../../common/components/ChartBar';
 import { PollContainer } from '../../common/containers/PollContainer';
-import { ButtonInput } from '../../common/UI/input/ButtonInput';
-import { StyledLabel } from '../../common/UI/label/StyledLabel';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { StyledLabel } from '../../common/ui/label/StyledLabel';
 import classes from './container.module.css';
 
 type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
@@ -27,8 +27,6 @@ export const PollResults: React.FC<ResultsProps> = ({
   },
   results = [105, 304, 15],
 }) => {
-  const { id } = useParams<{ id?: string }>();
-
   const totalVotes = results.reduce((a, b) => a + b);
 
   const getPercent = (votesCount: number) => {
@@ -67,7 +65,7 @@ export const PollResults: React.FC<ResultsProps> = ({
 
       <div className={classes.footer}>
         <div className={classes.footer__total__votes}>{totalVotes} votes</div>
-        <Link to={`/${id}`}>
+        <Link href={`/`}>
           <ButtonInput className={classes.btn__vote} value='Vote' />
         </Link>
       </div>

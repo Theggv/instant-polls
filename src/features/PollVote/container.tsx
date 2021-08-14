@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ReCAPTCHA } from 'react-google-recaptcha';
-import { Link, useParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
 import { PollContainer } from '../../common/containers/PollContainer';
 import { useBooleanInput } from '../../common/hooks/useBooleanInput';
 import { useCaptcha } from '../../common/hooks/useCaptcha';
-import { ButtonInput } from '../../common/UI/input/ButtonInput';
-import { StyledLabel } from '../../common/UI/label/StyledLabel';
+import { ButtonInput } from '../../common/ui/input/ButtonInput';
+import { StyledLabel } from '../../common/ui/label/StyledLabel';
 import classes from './container.module.css';
 
 type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
@@ -31,7 +32,7 @@ export const PollVote: React.FC<Draft> = ({
     Array(options.length).fill(false)
   );
   const captcha = useCaptcha(enableCaptcha);
-  const { id } = useParams<{ id?: string }>();
+  const router = useRouter();
 
   const onChange = (isChecked: boolean, index: number) => {
     if (multiple) {
@@ -81,7 +82,7 @@ export const PollVote: React.FC<Draft> = ({
           value='Vote'
           onClick={onClickVote}
         />
-        <Link to={`/${id}/r`}>
+        <Link href={`/${router.route}/r`}>
           <ButtonInput value='Results' />
         </Link>
       </div>

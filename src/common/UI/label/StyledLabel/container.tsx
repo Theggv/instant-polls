@@ -8,7 +8,10 @@ export const container: React.FC<React.ComponentPropsWithoutRef<'label'>> = ({
   ...props
 }) => {
   return (
-    <label {...props} className={clsx(classes.noselect, props.className)}>
+    <label
+      {...props}
+      className={clsx(classes.label, classes.noselect, props.className)}
+    >
       {children}
     </label>
   );
