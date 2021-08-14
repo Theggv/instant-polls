@@ -1,5 +1,5 @@
 {
-  "name": "instant-polls-frontend",
+  "name": "instant-polls",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
@@ -49,5 +49,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
 }
