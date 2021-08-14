@@ -1,1 +1,1 @@
-export { container as StyledLabel } from './container';
+export { StyledLabel } from './StyledLabel';

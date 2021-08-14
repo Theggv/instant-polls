@@ -1,1 +1,1 @@
-export { container as TextInput } from './container';
+export { TextInput } from './TextInput';

@@ -1,17 +1,16 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import classes from './container.module.css';
+import classes from './CheckboxInput.module.css';
 
-export const container = React.forwardRef<
+export const CheckboxInput = React.forwardRef<
   HTMLInputElement,
   React.ComponentPropsWithoutRef<'input'>
 >((props, ref) => {
   return (
     <input
       ref={ref}
-      type='text'
-      placeholder='Placeholder...'
+      type='checkbox'
       {...props}
       className={clsx(classes.input, props.className)}
     />

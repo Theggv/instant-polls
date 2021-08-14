@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import classes from './container.module.css';
+import classes from './PollContainer.module.css';
 
 interface Props {
   className?: string;

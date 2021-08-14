@@ -1,1 +1,1 @@
-export { container as StyledSelect } from './container';
+export { StyledSelect } from './StyledSelect';

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
-import classes from './container.module.css';
+import classes from './ChartBar.module.css';
 
 interface Props {
   className?: string;
@@ -9,7 +9,7 @@ interface Props {
   vertical?: boolean;
 }
 
-export const Container: React.FC<Props> = ({
+export const ChartBar: React.FC<Props> = ({
   percent,
   className,
   vertical = false,

@@ -1,9 +1,9 @@
-import classes from './container.module.css';
+import classes from './StyledLabel.module.css';
 
 import React from 'react';
 import clsx from 'clsx';
 
-export const container: React.FC<React.ComponentPropsWithoutRef<'label'>> = ({
+export const StyledLabel: React.FC<React.ComponentPropsWithoutRef<'label'>> = ({
   children,
   ...props
 }) => {

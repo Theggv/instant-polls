@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 
 import { CheckboxInput } from '../../ui/input/CheckboxInput';
 import { StyledLabel } from '../../ui/label/StyledLabel';
-import classes from './container.module.css';
+import classes from './CheckboxOption.module.css';
 
 interface Props {
   text: string;
@@ -12,7 +12,7 @@ interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Container: React.FC<Props> = ({
+export const CheckboxOption: React.FC<Props> = ({
   text,
   checked,
   onChange,

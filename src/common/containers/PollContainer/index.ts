@@ -1,1 +1,1 @@
-export { PollContainer } from './container';
+export { PollContainer } from './PollContainer';

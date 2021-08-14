@@ -1,1 +1,1 @@
-export { container as ButtonInput } from './container';
+export { ButtonInput } from './ButtonInput';
