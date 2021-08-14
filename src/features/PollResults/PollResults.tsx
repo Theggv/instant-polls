@@ -1,31 +1,23 @@
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 
 import { ChartBar } from '../../common/components/ChartBar';
 import { PollContainer } from '../../common/containers/PollContainer';
+import { PollDraft } from '../../common/model/pollDraft';
 import { ButtonInput } from '../../common/ui/input/ButtonInput';
 import { StyledLabel } from '../../common/ui/label/StyledLabel';
-import classes from './container.module.css';
+import classes from './PollResults.module.css';
 
-type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
-
-interface ResultsProps {
-  draft?: {
-    title?: string;
-    options?: string[];
-    multiple?: boolean;
-    checkDuplicates?: DuplicateCheckTypes;
-  };
-  results?: number[];
+export interface PollResultsProps {
+  id: string;
+  draft: PollDraft;
+  results: number[];
 }
 
-export const PollResults: React.FC<ResultsProps> = ({
-  draft = {
-    title: 'Question?',
-    options: ['Answer #1', 'Answer #2', 'Answer #3'],
-    multiple: false,
-  },
-  results = [105, 304, 15],
+export const PollResults: React.FC<PollResultsProps> = ({
+  id,
+  draft,
+  results,
 }) => {
   const totalVotes = results.reduce((a, b) => a + b);
 
@@ -65,7 +57,7 @@ export const PollResults: React.FC<ResultsProps> = ({
 
       <div className={classes.footer}>
         <div className={classes.footer__total__votes}>{totalVotes} votes</div>
-        <Link href={`/`}>
+        <Link href={`/polls/${id}`}>
           <ButtonInput className={classes.btn__vote} value='Vote' />
         </Link>
       </div>

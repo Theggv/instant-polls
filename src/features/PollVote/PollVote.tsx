@@ -1,41 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ReCAPTCHA } from 'react-google-recaptcha';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
 import { PollContainer } from '../../common/containers/PollContainer';
-import { useBooleanInput } from '../../common/hooks/useBooleanInput';
 import { useCaptcha } from '../../common/hooks/useCaptcha';
+import { PollDraft } from '../../common/model/pollDraft';
 import { ButtonInput } from '../../common/ui/input/ButtonInput';
 import { StyledLabel } from '../../common/ui/label/StyledLabel';
-import classes from './container.module.css';
+import { submitAnswer } from './api/submit';
+import classes from './PollVote.module.css';
 
-type DuplicateCheckTypes = 'none' | 'ip' | 'cookies';
+export type PollVoteProps = {
+  id: string;
+  draft: PollDraft;
+};
 
-interface Draft {
-  title?: string;
-  options?: string[];
-  multiple?: boolean;
-  captcha?: boolean;
-  checkDuplicates?: DuplicateCheckTypes;
-}
-
-export const PollVote: React.FC<Draft> = ({
-  title = 'Question?',
-  options = ['Answer #1', 'Answer #2', 'Answer #3'],
-  multiple = false,
-  captcha: enableCaptcha = true,
-}) => {
-  const allowMultipleInput = useBooleanInput(multiple);
-  const [selected, setSelected] = useState<boolean[]>(
-    Array(options.length).fill(false)
-  );
-  const captcha = useCaptcha(enableCaptcha);
+export const PollVote: React.FC<PollVoteProps> = ({ id, draft }) => {
   const router = useRouter();
 
+  const [selected, setSelected] = useState<boolean[]>(
+    Array(draft.options.length).fill(false)
+  );
+  const captcha = useCaptcha(draft.useCaptcha);
+
   const onChange = (isChecked: boolean, index: number) => {
-    if (multiple) {
+    if (draft.multiple) {
       setSelected(
         selected.map((value, i) => (i === index ? isChecked : value))
       );
@@ -44,18 +35,29 @@ export const PollVote: React.FC<Draft> = ({
     }
   };
 
-  const onClickVote = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+  const onClickVote = async (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     if (!selected.filter((x) => x).length) return;
+
+    const data = await submitAnswer(id, selected);
+    if (!data) return;
+
+    if (data.canSubmit) router.push(`/polls/${id}/results`);
   };
 
   return (
     <PollContainer type='form'>
-      <StyledLabel className={classes.title}>{title}</StyledLabel>
+      <StyledLabel className={classes.title}>{draft.title}</StyledLabel>
+
+      {draft.multiple ? (
+        <div className={classes.multiple}>Select All that Apply</div>
+      ) : null}
 
       <div className={classes.options}>
-        {options.map((option, index) => (
+        {draft.options.map((option, index) => (
           <CheckboxOption
             key={index}
             checked={selected[index]}
@@ -66,7 +68,7 @@ export const PollVote: React.FC<Draft> = ({
         ))}
       </div>
 
-      {enableCaptcha && (
+      {draft.useCaptcha && (
         <div className={classes.captcha}>
           <ReCAPTCHA
             sitekey='6LfrqfobAAAAAIgqP9z4s2oKRdEHwx4xDQgRjj54'
@@ -82,7 +84,7 @@ export const PollVote: React.FC<Draft> = ({
           value='Vote'
           onClick={onClickVote}
         />
-        <Link href={`/${router.route}/r`}>
+        <Link href={`${id}/results  `}>
           <ButtonInput value='Results' />
         </Link>
       </div>

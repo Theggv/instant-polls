@@ -16,7 +16,7 @@
   grid-template:
     'name votes' 1fr
     'bar percent' 1fr
-    / 4fr 1fr;
+    / 5fr 1fr;
 }
 
 .results__item__name {

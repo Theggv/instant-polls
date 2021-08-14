@@ -1,1 +1,1 @@
-export { Container as Footer } from './container';
+export { Footer } from './Footer';

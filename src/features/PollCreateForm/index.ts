@@ -1,1 +1,1 @@
-export { PollCreateForm } from './container';
+export { PollCreateForm } from './PollCreateForm';

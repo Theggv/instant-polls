@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Router, { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
@@ -10,7 +11,8 @@ import { ButtonInput } from '../../common/ui/input/ButtonInput';
 import { TextInput } from '../../common/ui/input/TextInput';
 import { StyledOption } from '../../common/ui/select/StyledOption';
 import { StyledSelect } from '../../common/ui/select/StyledSelect';
-import classes from './container.module.css';
+import { createPoll } from './api';
+import classes from './PollCreateForm.module.css';
 
 const usePollForm = (draft: PollDraft) => {
   const titleInput = useTextInput(draft.title);
@@ -21,18 +23,28 @@ const usePollForm = (draft: PollDraft) => {
 
   const nonEmptyOptions = useMemo(() => options.filter((x) => x), [options]);
 
+  const getDraft = (): PollDraft => ({
+    title: titleInput.value,
+    options: nonEmptyOptions,
+    checkDuplicates: duplicatesInput.value as any,
+    multiple: allowMultipleInput.value,
+    useCaptcha: captchaInput.value,
+  });
+
   // Change value for specific option
   const onOptionChange = (value: string, index: number) => {
     setOptions(options.map((oldValue, i) => (i === index ? value : oldValue)));
   };
 
-  const onCreatePoll = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+  const onCreatePoll = async (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     if (!titleInput.value || !nonEmptyOptions.length) return;
 
-    // redirect TODO: replace 1 with actual id
-    // history.push('/1');
+    const key = await createPoll(getDraft());
+    Router.push(`/polls/${key}`);
   };
 
   useEffect(() => {
@@ -50,7 +62,7 @@ const usePollForm = (draft: PollDraft) => {
   }, [options]);
 
   return {
-    title: titleInput.bind,
+    titleInput,
     multiple: allowMultipleInput.bind,
     useCaptcha: captchaInput.bind,
     checkDuplicates: {
@@ -66,13 +78,7 @@ const usePollForm = (draft: PollDraft) => {
     onOptionChange,
     onCreatePoll,
 
-    draft: {
-      title: titleInput.value,
-      options: nonEmptyOptions,
-      checkDuplicates: duplicatesInput.value,
-      multiple: allowMultipleInput.value,
-      useCaptcha: captchaInput.value,
-    } as PollDraft,
+    draft: getDraft(),
 
     asSearchParam() {
       return JSON.stringify({
@@ -92,11 +98,7 @@ export const defaultDraft = {
   checkDuplicates: 'cookies',
 } as PollDraft;
 
-interface PollCreateFormProps {
-  draft?: PollDraft;
-}
-
-export const PollCreateForm: React.FC<PollCreateFormProps> = ({
+export const PollCreateForm: React.FC<{ draft?: PollDraft }> = ({
   draft = defaultDraft,
 }) => {
   const form = usePollForm(draft);
@@ -107,7 +109,7 @@ export const PollCreateForm: React.FC<PollCreateFormProps> = ({
         required
         className={classes.title}
         placeholder='Type your question'
-        {...form.title}
+        {...form.titleInput.bind}
       />
 
       <div className={classes.options}>

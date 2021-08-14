@@ -1,1 +1,2 @@
-export { PollResults } from './container';
+export { PollResults } from './PollResults';
+export type { PollResultsProps } from './PollResults';

@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import classes from './container.module.css';
+import classes from './Main.module.css';
 
 interface Props {
   className?: string;
 }
 
-export const MainContainer: React.FC<Props> = ({ children, className }) => {
+export const Main: React.FC<Props> = ({ children, className }) => {
   return <main className={clsx(classes.main, className)}>{children}</main>;
 };

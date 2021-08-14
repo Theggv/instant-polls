@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-
-import { ReCAPTCHA } from 'react-google-recaptcha';
+import { useEffect, useState } from 'react';
 
 export const useCaptcha = (enable: boolean) => {
   const [grecaptcha, setGrecaptcha] = useState<any>();
