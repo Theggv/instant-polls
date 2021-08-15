@@ -18,9 +18,10 @@ import classes from './PollVote.module.css';
 export type PollVoteProps = {
   id: string;
   draft: PollDraft;
+  onDuplicate: () => void;
 };
 
-const useSubmitAnswer = (id: string, draft: PollDraft) => {
+const useSubmitAnswer = ({ id, draft, onDuplicate }: PollVoteProps) => {
   const router = useRouter();
   const cookies = useCookies();
   const { ip } = useGetIPAddress(draft.checkDuplicates === 'ip');
@@ -60,7 +61,10 @@ const useSubmitAnswer = (id: string, draft: PollDraft) => {
     if (!answers.filter((x) => x).length || voteClicked) return;
 
     // Check cookies
-    if (draft.checkDuplicates === 'cookies' && hasCookie()) return;
+    if (draft.checkDuplicates === 'cookies' && hasCookie()) {
+      onDuplicate();
+      return;
+    }
 
     setVoteClicked(true);
 
@@ -111,10 +115,14 @@ const useCheckboxList = (draft: PollDraft) => {
   };
 };
 
-export const PollVote: React.FC<PollVoteProps> = ({ id, draft }) => {
+export const PollVote: React.FC<PollVoteProps> = ({
+  id,
+  draft,
+  onDuplicate,
+}) => {
   const captcha = useCaptcha(draft.useCaptcha);
   const list = useCheckboxList(draft);
-  const submit = useSubmitAnswer(id, draft);
+  const submit = useSubmitAnswer({ id, draft, onDuplicate });
 
   return (
     <PollContainer type='form'>

@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import { PieChart } from '../common/components/PieChart';
 
 import Layout from '../common/containers/Layout';
 import { PollDraft } from '../common/model/pollDraft';
