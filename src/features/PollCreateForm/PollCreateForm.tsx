@@ -131,7 +131,7 @@ export const PollCreateForm: React.FC<{ draft?: PollDraft }> = ({
       </div>
 
       <div className={classes.settings}>
-        <StyledSelect {...form.checkDuplicates}>
+        <StyledSelect {...form.checkDuplicates} className={classes.select}>
           <StyledOption value='ip'>IP Duplication Checking</StyledOption>
           <StyledOption value='cookies'>
             Browser Cookie Duplication Checking

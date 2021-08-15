@@ -2,7 +2,14 @@
   max-width: 1000px;
   margin: 0 auto;
   min-height: 390px;
+  padding: 0 10px;
 
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 960px) {
+  .main {
+    align-items: center;
+  }
 }

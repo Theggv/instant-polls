@@ -22,6 +22,18 @@
   max-width: 350px;
 }
 
+@media (max-width: 420px) {
+  .select {
+    width: calc(100% - 30px);
+  }
+}
+
+@media (max-width: 400px) {
+  .select {
+    width: calc(100% - 60px);
+  }
+}
+
 .submit {
   margin: 20px;
   margin-left: 40px;

@@ -2,9 +2,7 @@ export const useCookies = () => {
   const getCookie = (key: string) => {
     const matches = document.cookie.match(
       new RegExp(
-        '(?:^|; )' +
-          key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-          '=([^;]*)'
+        '(?:^|; )' + key.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)'
       )
     );
 
