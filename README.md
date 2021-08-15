@@ -1,10 +1,10 @@
 # Strawpoll clone
 
 - [x] Create Form
-- [ ] Vote form
+- [x] Vote form
   - [x] Submit result
-  - [ ] Duplucation check
-  - [ ] Captcha check
+  - [x] Duplucation check
+  - [x] Captcha check
 - [ ] Results form
   - [x] Results
   - [ ] Pie chart
