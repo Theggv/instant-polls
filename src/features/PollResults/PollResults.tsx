@@ -57,7 +57,7 @@ export const PollResults: React.FC<PollResultsProps> = ({
 
       <div className={classes.footer}>
         <div className={classes.footer__total__votes}>{totalVotes} votes</div>
-        <Link href={`/polls/${id}`}>
+        <Link href={`/polls/${id}`} passHref>
           <ButtonInput className={classes.btn__vote} value='Vote' />
         </Link>
       </div>

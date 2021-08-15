@@ -1,5 +1,6 @@
+import axios from 'axios';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { CheckboxOption } from '../../common/components/CheckboxOption';
@@ -11,7 +12,7 @@ import { ButtonInput } from '../../common/ui/input/ButtonInput';
 import { TextInput } from '../../common/ui/input/TextInput';
 import { StyledOption } from '../../common/ui/select/StyledOption';
 import { StyledSelect } from '../../common/ui/select/StyledSelect';
-import { createPoll } from './api';
+import { CreatePollResponse } from '../../pages/api/polls';
 import classes from './PollCreateForm.module.css';
 
 const usePollForm = (draft: PollDraft) => {
@@ -47,8 +48,10 @@ const usePollForm = (draft: PollDraft) => {
 
     setClicked(true);
 
-    const key = await createPoll(getDraft());
-    Router.push(`/polls/${key}`);
+    const { data } = await axios.post<CreatePollResponse>('/api/polls', {
+      draft: getDraft(),
+    });
+    if (!data.error) Router.push(`/polls/${data.id}`);
   };
 
   useEffect(() => {
@@ -148,9 +151,10 @@ export const PollCreateForm: React.FC<{ draft?: PollDraft }> = ({
         />
         <Link
           href={{
-            pathname: '',
+            pathname: '/',
             search: `draft=${form.asSearchParam()}`,
           }}
+          passHref
         >
           <ButtonInput value='Save as draft' />
         </Link>

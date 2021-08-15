@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export const useCaptcha = (enable: boolean) => {
   const [grecaptcha, setGrecaptcha] = useState<any>();
-  const [token, setToken] = useState<string | null>();
+  const [token, setToken] = useState<string | null>(null);
 
   const onChange = (str: string | null) => {
     setToken(str);

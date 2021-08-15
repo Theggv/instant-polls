@@ -1,0 +1,10 @@
+.container {
+  position: relative;
+}
+
+.canvas {
+  position: relative;
+
+  width: 200px;
+  height: 200px;
+}

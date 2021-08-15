@@ -5,6 +5,7 @@ import {
 } from 'next';
 import Head from 'next/head';
 import React from 'react';
+import { PieChart } from '../../../common/components/PieChart';
 
 import Layout from '../../../common/containers/Layout';
 import { PollResults, PollResultsProps } from '../../../features/PollResults';
@@ -16,10 +17,10 @@ export const getServerSideProps: GetServerSideProps<PollResultsProps> = async ({
   const id = params?.id as string;
   const data = await getResults(id);
 
-  if (!data) return { notFound: true };
+  if (!data || !data.poll) return { notFound: true };
 
   return {
-    props: { ...data, id },
+    props: { ...data.poll, id },
   };
 };
 

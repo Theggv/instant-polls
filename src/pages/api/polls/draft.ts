@@ -1,34 +1,38 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { db } from '../../../common/model/firebase';
 import { PollDraft } from '../../../common/model/pollDraft';
+import { getPoll } from './';
 
 const BASE_PATH = '/polls';
 
 export type GetPollResponse = {
-  draft: PollDraft;
+  draft?: PollDraft;
+  error?: string;
 };
 
-export const getDraft = async (id: string): Promise<PollDraft | undefined> => {
-  return await db
-    .ref(`${BASE_PATH}/${id}/draft`)
-    .get()
-    .then((snapshot) => {
-      if (!snapshot.exists()) return undefined;
+export const getDraft = async (id: string): Promise<PollDraft | null> => {
+  const poll = await getPoll(id);
 
-      return snapshot.val();
-    })
-    .catch((err) => {
-      console.error(err);
-      return undefined;
-    });
+  if (!poll) return null;
+
+  return poll.draft;
 };
 
 export default async (
   req: NextApiRequest,
   res: NextApiResponse<GetPollResponse>
 ) => {
-  const draft = await getDraft(req.body);
+  if (req.method == 'GET') {
+    /**
+     * id query param required
+     */
+    if (!req.query.id) {
+      res.status(400).json({ error: 'id query param required' });
+      return;
+    }
 
-  if (!draft) res.status(404);
-  else res.status(200).json({ draft });
+    const draft = await getDraft(req.query.id as any);
+
+    if (!draft) res.status(404).json({});
+    else res.status(200).json({ draft });
+  }
 };

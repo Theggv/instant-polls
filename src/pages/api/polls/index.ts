@@ -1,36 +1,59 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { db } from '../../../common/model/firebase';
+import { PollDraft } from '../../../common/model/pollDraft';
 
-const BASE_PATH = '/polls';
+export interface CreatePollResponse {
+  id: string;
+  error?: string;
+}
 
-export type GetPollsResponse = {
-  keys: string[];
+export interface GetPollResponse extends CreatePollResponse {
+  draft: PollDraft;
+  results: number[];
+  ips: string[];
+}
+
+export const createPoll = async (draft: PollDraft): Promise<string | null> => {
+  const poll = {
+    draft,
+    results: Array(draft.options.length).fill(0),
+    ips: [],
+  };
+
+  const ref = await db.ref('/polls').push(poll);
+
+  return ref.key;
 };
 
-export const getPolls = async (id: string) => {
+export const getPoll = async (id: string): Promise<GetPollResponse | null> => {
   return await db
-    .ref(BASE_PATH)
+    .ref(`/polls/${id}`)
     .get()
     .then((snapshot) => {
-      if (!snapshot.exists()) return [];
-      const keys: string[] = [];
-      snapshot.forEach((snap) => {
-        if (snap.key) keys.push(snap.key);
-      });
+      if (!snapshot.exists()) return null;
 
-      return keys;
+      return { id, ...snapshot.val() };
     })
     .catch((err) => {
       console.error(err);
-      return [];
+      return null;
     });
 };
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse<GetPollsResponse>
-) => {
-  const keys = await getPolls(req.body);
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method == 'POST') {
+    /**
+     * draft body param required
+     */
+    if (!req.body.draft) {
+      res.status(400).json({ error: 'draft body param required' });
+      return;
+    }
 
-  res.status(200).json({ keys });
+    const key = await createPoll(req.body.draft);
+
+    if (!key) res.json(500);
+    else res.status(200).json({ id: key });
+  }
 };

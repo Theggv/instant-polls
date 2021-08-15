@@ -6,9 +6,9 @@ import {
 import Head from 'next/head';
 import React from 'react';
 
-import Layout from '../../common/containers/Layout';
-import { PollVote, PollVoteProps } from '../../features/PollVote';
-import { getDraft } from '../api/polls/draft';
+import Layout from '../../../common/containers/Layout';
+import { PollVote, PollVoteProps } from '../../../features/PollVote';
+import { getDraft } from '../../api/polls/draft';
 
 export const getServerSideProps: GetServerSideProps<PollVoteProps> = async ({
   params,
