@@ -16,7 +16,7 @@ const Home: NextPage<{ draft?: PollDraft }> = (props) => {
       </Head>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <PollCreateForm {...props} />
-        <PieChart votes={[2, 3, 2, 5, 1, 2]} />
+        {/* <PieChart votes={[2, 3, 2, 5, 1, 2]} /> */}
       </div>
     </Layout>
   );
