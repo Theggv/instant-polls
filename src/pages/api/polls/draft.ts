@@ -2,8 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { PollDraft } from '../../../common/model/pollDraft';
 import { getPoll } from './';
 
-const BASE_PATH = '/polls';
-
 export type GetPollResponse = {
   draft?: PollDraft;
   error?: string;

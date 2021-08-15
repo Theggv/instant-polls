@@ -1,5 +1,10 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "rules": {
     "import/no-anonymous-default-export": [
       "error",
@@ -12,6 +17,8 @@
         "allowLiteral": false,
         "allowObject": false
       }
-    ]
+    ],
+    "no-unused-vars": "off",
+    "react/prop-types": "off"
   }
 }
